@@ -1,0 +1,109 @@
+# --- LIBRARIES ---
+# QCoreApplication: Manages interface translation and text.
+from qgis.PyQt.QtCore import QCoreApplication
+
+# qgis.core: The "heart" of QGIS. Here we get tools for processing,
+# geometry, field manipulation (columns), and data input/output.
+from qgis.core import (QgsProcessing,
+                       QgsFeatureSink,
+                       QgsProcessingAlgorithm,
+                       QgsProcessingParameterFeatureSource,
+                       QgsProcessingParameterFeatureSink,
+                       QgsField)
+
+# QVariant: Defines the column data type (Real Number, Integer, Text, etc.).
+from PyQt5.QtCore import QVariant
+
+class MultipleAreaCalculator(QgsProcessingAlgorithm):
+    """
+    This class inherits from QgsProcessingAlgorithm, which allows your 
+    script to appear as an official tool within the QGIS Processing Toolbox.
+    """
+    
+    # Constants to identify input and output parameters
+    INPUT = 'INPUT'
+    OUTPUT = 'OUTPUT'
+
+    def tr(self, string):
+        # Function to allow text translation by QGIS
+        return QCoreApplication.translate('Processing', string)
+
+    def createInstance(self):
+        # Creates an instance of the algorithm itself
+        return MultipleAreaCalculator()
+
+    def name(self):
+        # Internal script name (no spaces, lowercase)
+        return 'qgis-multi-area-calculator'
+
+    def displayName(self):
+        # Name that will appear to the user in the toolbox
+        return self.tr('Multi-Area Calculator (sqm, sqkm, ha)')
+
+    def group(self):
+        # Name of the folder where the script will be stored
+        return self.tr("Ivo's Automations")
+
+    def groupId(self):
+        # Internal group ID
+        return 'ivo_scripts'
+
+    def initAlgorithm(self, config=None):
+        # Defines the parameters the tool window will display.
+        
+        # 1. Parameter to choose the input layer (Polygons)
+        self.addParameter(
+            QgsProcessingParameterFeatureSource(
+                self.INPUT,
+                self.tr('Select the polygon layer'),
+                [QgsProcessing.TypeVectorPolygon]
+            )
+        )
+        
+        # 2. Parameter to define where the result will be saved
+        self.addParameter(
+            QgsProcessingParameterFeatureSink(
+                self.OUTPUT,
+                self.tr('Layer with calculated areas')
+            )
+        )
+
+    def processAlgorithm(self, parameters, context, feedback):
+        # This is where the "magic" happens when you click "Run".
+        
+        # Get the input layer based on parameters
+        source = self.parameterAsSource(parameters, self.INPUT, context)
+        
+        # Create a copy of the field structure (columns) from the original layer
+        fields = source.fields()
+        
+        # Add the 3 new desired columns (Double = Decimal Number)
+        fields.append(QgsField("area_sqm", QVariant.Double, len=20, prec=2))
+        fields.append(QgsField("area_sqkm", QVariant.Double, len=20, prec=6))
+        fields.append(QgsField("area_ha", QVariant.Double, len=20, prec=4))
+
+        # The "Sink" is the destination: it creates the new layer with the new fields
+        (sink, dest_id) = self.parameterAsSink(parameters, self.OUTPUT, context,
+                                               fields, source.wkbType(), source.sourceCrs())
+
+        # Loop: Iterate through each feature (each polygon) of the input layer
+        features = source.getFeatures()
+        for feature in features:
+            # Get the polygon geometry
+            geom = feature.geometry()
+            
+            # Base calculation (Assuming the CRS is in meters/projected)
+            a_sqm = geom.area()
+            a_sqkm = a_sqm / 1_000_000
+            a_ha = a_sqm / 10_000
+            
+            # Update the feature attributes with the new calculated values
+            # Keep original attributes and append the new ones
+            new_attributes = feature.attributes() + [a_sqm, a_sqkm, a_ha]
+            feature.setAttributes(new_attributes)
+            
+            # Add the modified feature to the output layer
+            sink.addFeature(feature, QgsFeatureSink.FastInsert)
+
+        # Return the final result for QGIS to load onto the map
+        return {self.OUTPUT: dest_id}
