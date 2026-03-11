@@ -1,61 +1,50 @@
-[# QGIS Multi-Area Calculator (PyQGIS)
+# Multi-Area Calculator (v2.0)
 
-<p align="center">
-  <a href="#-english">English</a> • 
-  <a href="#-português">Português</a>
-</p>
+<img src="icon.png" width="120" align="right">
 
----
-
-<a name="english"></a>
 ## 🇺🇸 English
+**Released on: March 11, 2026**
 
-A PyQGIS processing script that automates the calculation of areas in multiple units. It adds three new fields to your polygon layer attributes: square meters (sqm), square kilometers (sqkm), and hectares (ha).
+This repository provides professional geoprocessing solutions for automated area calculation in QGIS, supporting both international and Brazilian standards. Version 2.0 introduces a modular approach with two distinct usage tiers.
 
-### 🚀 Features
-- Integrates directly into the QGIS Processing Toolbox.
-- Automatically creates and populates three area columns.
-- Preserves all original attributes from the source layer.
+### Usage Options
 
-### 💻 Compatibility
-- Tested on **QGIS 3.22.8-Białowieża**.
-- Compatible with most QGIS 3.x versions.
+#### 1. Professional Plugin (ZIP Package)
+The **ZIP** file contains the complete version of the tool, integrated directly into the QGIS Processing Toolbox.
+* **Dynamic Selection:** Instead of fixed outputs, the plugin features a graphical interface where the user selects exactly which units to generate.
+* **Comprehensive Units:** Supports Square Meters ($m^2$), Square Kilometers ($km^2$), Hectares (ha), Acres (ac), Square Miles ($mi^2$), and Brazilian Alqueires (Paulista and Mineiro).
+* **Batch Processing:** Optimized for high-performance calculation across multiple vector features.
 
-### 📖 How to Use
-1. **Open the Python Console:** `Plugins` > `Python Console` (`Ctrl+Alt+P`).
-2. **Open the Script Editor:** Click the **Show Editor** icon (notepad/pencil).
-3. **Load the Code:** Paste the content of `multiple_area_calculator.py`.
-4. **Execute:** Click the green **Run Script** button.
+#### 2. Simple Script (CODE File)
+The **CODE** file provides a lightweight Python script for users who need a quick execution without installing a full plugin.
+* **Automated Triple Output:** This version is programmed to automatically generate three standard layers/fields: Square Meters ($m^2$), Square Kilometers ($km^2$), and Hectares (ha).
+* **Direct Execution:** Ideal for quick testing via the QGIS Python Console.
 
-### ⚠️ Requirements
-- Use a **Projected Coordinate Reference System (CRS)** (e.g., UTM) for accurate results.
+### Professional Branding
+This project is part of the **AI (Antônio Ivo)** professional suite, focusing on technical rigor and user-centric design in geoprocessing.
 
 ---
 
-<a name="português"></a>
 ## 🇧🇷 Português
+**Publicado em: 11 de Março de 2026**
 
-Script de processamento PyQGIS para automação do cálculo de áreas em múltiplas unidades. Ele gera automaticamente três novos campos: metros quadrados (sqm), quilômetros quadrados (sqkm) e hectares (ha).
+Este repositório oferece soluções profissionais de geoprocessamento para o cálculo automatizado de áreas no QGIS, com suporte a padrões internacionais e brasileiros. A versão 2.0 introduz uma abordagem modular com dois níveis de utilização.
 
-### 🚀 Funcionalidades
-- Integração direta com a Caixa de Ferramentas de Processamento do QGIS.
-- Criação e preenchimento automático das colunas de área.
-- Preserva todos os dados originais da camada.
+### Opções de Uso
 
-### 💻 Compatibilidade
-- Testado no **QGIS 3.22.8-Białowieża**.
-- Compatível com versões QGIS 3.x.
+#### 1. Plugin Profissional (Pacote ZIP)
+O arquivo **ZIP** contém a versão completa da ferramenta, integrada diretamente à Caixa de Ferramentas de Processamento do QGIS.
+* **Seleção Dinâmica:** Em vez de saídas fixas, o plugin apresenta uma interface gráfica onde o usuário seleciona exatamente quais unidades deseja gerar.
+* **Unidades Abrangentes:** Suporta Metros Quadrados ($m^2$), Quilômetros Quadrados ($km^2$), Hectares (ha), Acres (ac), Milhas Quadradas ($mi^2$) e Alqueires Brasileiros (Paulista e Mineiro).
+* **Processamento em Lote:** Otimizado para cálculos de alta performance em múltiplas feições vetoriais.
 
-### 📖 Como Usar
-1. **Abra o Console Python:** `Complementos` > `Console Python` (`Ctrl+Alt+P`).
-2. **Abra o Editor:** Clique no ícone **Mostrar Editor**.
-3. **Carregue o Código:** Cole o conteúdo de `multiple_area_calculator.py`.
-4. **Execute:** Clique no botão verde **Executar Script**.
+#### 2. Script Simples (Arquivo CODE)
+O arquivo **CODE** fornece um script Python leve para usuários que precisam de uma execução rápida sem instalar um plugin completo.
+* **Saída Tripla Automática:** Esta versão é programada para gerar automaticamente três campos padrão: Metros Quadrados ($m^2$), Quilômetros Quadrados ($km^2$) e Hectares (ha).
+* **Execução Direta:** Ideal para testes rápidos via Console Python do QGIS.
 
-### ⚠️ Requisitos
-- Utilize um **Sistema de Referência de Coordenadas (SRC) Projetado** (ex: UTM) para cálculos precisos.
+### Identidade Profissional
+Este projeto faz parte da suíte profissional **AI (Antônio Ivo)**, focada em rigor técnico e design centrado no usuário para geoprocessamento.
 
 ---
-**Developed by [Antônio Ivo](https://github.com/ivogeotec)** *M.Sc. in Geography | Geoprocessing Manager | Systems Developer*
-
-https://github.com/ivogeotec/qgis-multi-area-calculator/edit/main/README.md
+**Developed by [Antônio Ivo](https://github.com/ivogeotec)** *M.Sc. in Geography | Geoprocessing Manager | Systems Developer
