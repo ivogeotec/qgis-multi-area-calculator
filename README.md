@@ -56,5 +56,5 @@ Script de processamento PyQGIS para automação do cálculo de áreas em múltip
 - Utilize um **Sistema de Referência de Coordenadas (SRC) Projetado** (ex: UTM) para cálculos precisos.
 
 ---
-**Developed by [Antônio Ivo](https://github.com/ivogeotec)** *M.Sc. in Geography | Geoprocessing Manager | Aspiring AI Engineer*
+**Developed by [Antônio Ivo](https://github.com/ivogeotec)** *M.Sc. in Geography | Geoprocessing Manager | Systems Developer*
 ](https://github.com/ivogeotec/qgis-multi-area-calculator/edit/main/README.md)
