@@ -1,6 +1,7 @@
 # Multi-Area Calculator (v2.0)
 
-<img src="icon.png" width="64" align="right">
+| <img src="icon.png" width="120"> | # Multi-Area Calculator (v2.0) |
+| :--- | :--- |
 
 ## 🇺🇸 English
 **Released on: March 11, 2026**
