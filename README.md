@@ -47,4 +47,4 @@ O arquivo **CODE** fornece um script Python leve para usuários que precisam de 
 Este projeto faz parte da suíte profissional **AI (Antônio Ivo)**, focada em rigor técnico e design centrado no usuário para geoprocessamento.
 
 ---
-**Developed by [Antônio Ivo](https://github.com/ivogeotec)** *M.Sc. in Geography | Geoprocessing Manager | Systems Developer
+**Developed by [Antônio Ivo](https://github.com/ivogeotec)** *M.Sc. in Geography | Geoprocessing Manager | Systems Developer*
