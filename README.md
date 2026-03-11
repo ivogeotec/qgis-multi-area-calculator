@@ -1,4 +1,4 @@
-# QGIS Multi-Area Calculator (PyQGIS)
+[# QGIS Multi-Area Calculator (PyQGIS)
 
 <p align="center">
   <a href="#-english">English</a> • 
@@ -57,3 +57,4 @@ Script de processamento PyQGIS para automação do cálculo de áreas em múltip
 
 ---
 **Developed by [Antônio Ivo](https://github.com/ivogeotec)** *M.Sc. in Geography | Geoprocessing Manager | Aspiring AI Engineer*
+](https://github.com/ivogeotec/qgis-multi-area-calculator/edit/main/README.md)
