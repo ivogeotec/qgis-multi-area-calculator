@@ -4,7 +4,6 @@
 | :--- | :--- |
 
 ## 🇺🇸 English
-**Released on: March 11, 2026**
 
 This repository provides professional geoprocessing solutions for automated area calculation in QGIS, supporting both international and Brazilian standards. Version 2.0 introduces a modular approach with two distinct usage tiers.
 
@@ -27,7 +26,6 @@ This project is part of the **AI (Antônio Ivo)** professional suite, focusing o
 ---
 
 ## 🇧🇷 Português
-**Publicado em: 11 de Março de 2026**
 
 Este repositório oferece soluções profissionais de geoprocessamento para o cálculo automatizado de áreas no QGIS, com suporte a padrões internacionais e brasileiros. A versão 2.0 introduz uma abordagem modular com dois níveis de utilização.
 
