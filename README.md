@@ -5,7 +5,7 @@
 
 ## 🇺🇸 English
 
-This repository provides professional geoprocessing solutions for automated area calculation in QGIS, supporting both international and Brazilian standards. Version 2.0 introduces a modular approach with two distinct usage tiers.
+This repository provides professional geoprocessing solutions for automated area calculation in QGIS, supporting both international and Brazilian standards. 
 
 ### Usage Options
 
@@ -27,7 +27,7 @@ This project is part of the **AI (Antônio Ivo)** professional suite, focusing o
 
 ## 🇧🇷 Português
 
-Este repositório oferece soluções profissionais de geoprocessamento para o cálculo automatizado de áreas no QGIS, com suporte a padrões internacionais e brasileiros. A versão 2.0 introduz uma abordagem modular com dois níveis de utilização.
+Este repositório oferece soluções profissionais de geoprocessamento para o cálculo automatizado de áreas no QGIS, com suporte a padrões internacionais e brasileiros. 
 
 ### Opções de Uso
 
