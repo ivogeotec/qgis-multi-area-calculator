@@ -1,58 +1,84 @@
-from qgis.PyQt.QtCore import QCoreApplication
+from qgis.PyQt.QtCore import QCoreApplication, QVariant
 from qgis.core import (QgsProcessing,
                        QgsFeatureSink,
                        QgsProcessingAlgorithm,
                        QgsProcessingParameterFeatureSource,
                        QgsProcessingParameterFeatureSink,
+                       QgsProcessingParameterEnum,
                        QgsField)
-from PyQt5.QtCore import QVariant
 
-class MultipleAreaCalculator(QgsProcessingAlgorithm):
-    
+class MultiAreaAlgorithm(QgsProcessingAlgorithm):
     INPUT = 'INPUT'
     OUTPUT = 'OUTPUT'
+    UNITS = 'UNITS'
+
+    UNIT_OPTIONS = [
+        'Metros Quadrados / Sq Meters (m²)',
+        'Quilômetros Quadrados / Sq Kilometers (km²)',
+        'Hectares (ha)',
+        'Acres (ac)',
+        'Milhas Quadradas / Sq Miles (mi²)',
+        'Alqueire Paulista (2.42 ha)',
+        'Alqueire Mineiro (4.84 ha)'
+    ]
+
+    CONVERSION_FACTORS = [
+        1.0,            # m²
+        1e-6,           # km²
+        1e-4,           # ha
+        0.000247105,    # ac
+        3.861e-7,       # mi²
+        1/24200,        # Alqueire Paulista
+        1/48400         # Alqueire Mineiro
+    ]
+
+    FIELD_NAMES = ['area_m2', 'area_km2', 'area_ha', 'area_ac', 'area_mi2', 'alq_paul', 'alq_min']
 
     def tr(self, string):
         return QCoreApplication.translate('Processing', string)
 
     def createInstance(self):
-        return MultipleAreaCalculator()
+        return MultiAreaAlgorithm()
 
     def name(self):
-        return 'qgis-multi-area-calculator'
+        return 'multiareapro'
 
     def displayName(self):
-        return self.tr('Multi-Area Calculator (sqm, sqkm, ha)')
+        return self.tr('Calculadora de Áreas Múltiplas / Multi-Area Calculator')
 
     def group(self):
-        return self.tr("Ivo's Automations")
+        return ''
 
     def groupId(self):
-        return 'ivo_scripts'
+        return ''
+
+    # Este método adiciona a descrição no canto direito da janela
+    def shortHelpString(self):
+        return self.tr("EN | Professional geoprocessing tool for multi-unit area calculation.\n\n"
+                       "BR | Ferramenta profissional de geoprocessamento para cálculo de áreas em múltiplas unidades.")
 
     def initAlgorithm(self, config=None):
-        self.addParameter(
-            QgsProcessingParameterFeatureSource(
-                self.INPUT,
-                self.tr('Select the polygon layer'),
-                [QgsProcessing.TypeVectorPolygon]
-            )
-        )
-        
-        self.addParameter(
-            QgsProcessingParameterFeatureSink(
-                self.OUTPUT,
-                self.tr('Layer with calculated areas')
-            )
-        )
+        self.addParameter(QgsProcessingParameterFeatureSource(
+            self.INPUT, self.tr('Camada de Entrada / Input Layer'), [QgsProcessing.TypeVectorPolygon]))
+
+        self.addParameter(QgsProcessingParameterEnum(
+            self.UNITS,
+            self.tr('Unidades de Saída / Output Units'),
+            options=self.UNIT_OPTIONS,
+            allowMultiple=True,
+            defaultValue=[0, 1, 2]
+        ))
+
+        self.addParameter(QgsProcessingParameterFeatureSink(
+            self.OUTPUT, self.tr('Camada de Saída / Output Layer')))
 
     def processAlgorithm(self, parameters, context, feedback):
         source = self.parameterAsSource(parameters, self.INPUT, context)
-        fields = source.fields()
+        selected_indices = self.parameterAsEnums(parameters, self.UNITS, context)
         
-        fields.append(QgsField("area_sqm", QVariant.Double, len=20, prec=2))
-        fields.append(QgsField("area_sqkm", QVariant.Double, len=20, prec=6))
-        fields.append(QgsField("area_ha", QVariant.Double, len=20, prec=4))
+        fields = source.fields()
+        for i in selected_indices:
+            fields.append(QgsField(self.FIELD_NAMES[i], QVariant.Double, len=20, prec=4))
 
         (sink, dest_id) = self.parameterAsSink(parameters, self.OUTPUT, context,
                                                fields, source.wkbType(), source.sourceCrs())
@@ -60,12 +86,13 @@ class MultipleAreaCalculator(QgsProcessingAlgorithm):
         features = source.getFeatures()
         for feature in features:
             geom = feature.geometry()
-            a_sqm = geom.area()
-            a_sqkm = a_sqm / 1_000_000
-            a_ha = a_sqm / 10_000
+            m2 = geom.area()
             
-            new_attributes = feature.attributes() + [a_sqm, a_sqkm, a_ha]
-            feature.setAttributes(new_attributes)
+            new_attrs = feature.attributes()
+            for i in selected_indices:
+                new_attrs.append(m2 * self.CONVERSION_FACTORS[i])
+            
+            feature.setAttributes(new_attrs)
             sink.addFeature(feature, QgsFeatureSink.FastInsert)
 
         return {self.OUTPUT: dest_id}
