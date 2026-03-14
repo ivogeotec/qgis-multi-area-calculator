@@ -1,6 +1,6 @@
-# Multi-Area Calculator (v2.0)
+# Multi-Area Calculator (for QGIS 4.)
 
-| <img src="icon.png" width="64"> | # Multi-Area Calculator (v2.0) |
+| <img src="icon.png" width="64"> | # Multi-Area Calculator |
 | :--- | :--- |
 
 ## 🇺🇸 English
